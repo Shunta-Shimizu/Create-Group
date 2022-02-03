@@ -171,13 +171,16 @@ class ViewController3: UIViewController,UIPickerViewDelegate,UIPickerViewDataSou
         print(groupMembersList)
     }
     
+    var repeatedGroupName:String=""
     func setCell2(){
         for i in 0..<groupNum{
             if groupMembersList[i].contains(member)==true{
+                repeatedGroupName=groupNameList[i]
+                self.repetitionAlert()
                 member=""
             }
             else{
-                okButton.setTitle("既に追加済み", for: .normal)
+                //okButton.setTitle("既に追加済み", for: .normal)
             }
         }
         if !(member==""){
@@ -186,7 +189,16 @@ class ViewController3: UIViewController,UIPickerViewDelegate,UIPickerViewDataSou
         }
     }
     
-    @IBAction func okButton(_ sender: Any) {
+    func repetitionAlert(){
+        let alert=UIAlertController(title: "選択内容の重複", message: repeatedGroupName+"に追加済みです。", preferredStyle: .alert)
+        let ok=UIAlertAction(title: "OK", style: .default) { (action) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(ok)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func setCell_and_AddButton(_ sender: Any) {
         _ = sender as! UIButton
         if groupMembersList[0].count==0{
             self.insertCell()
